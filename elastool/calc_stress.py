@@ -30,19 +30,18 @@ def calc_stress(pos_optimized, cell_strain, method_stress_statistics, stress_set
         step = 'NVT-MD'
         tag = 'Total+kin.'
         kpoints_file_name = 'KPOINTS-dynamic'
-        #vasp.write_vasp('POSCAR', pos_supercell, vasp5=True, direct=True)
-        vasp.write_vasp('POSCAR', pos_strain, vasp5=True, sort=True, direct=True)
     else:
-        vasp.write_vasp('POSCAR', pos_strain, vasp5=True, sort=True, direct=True)
         step ='fixed-volume-opt'
         tag = 'in kB'
         kpoints_file_name = 'KPOINTS-static'
-        
+
+    #vasp.write_vasp('POSCAR', pos_supercell, vasp5=True, direct=True)
+    vasp.write_vasp('POSCAR', pos_strain, vasp5=True, sort=True, direct=True)
     # calculate stresses via static or molecular dynamics at fixed pressure and/or temperature
     vasp_run(step, kpoints_file_name, cwd)
 
     run_mode = int(indict['run_mode'][0])
-    if run_mode == 1 or run_mode == 3:
+    if run_mode in {1, 3}:
         stress = mean_stress('OUTCAR', num_last_samples, tag)
         stress_set_dict[up].append(stress)
 

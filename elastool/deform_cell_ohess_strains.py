@@ -30,71 +30,111 @@ def deform_cell_ohess_strains(latt_system, cell, up):
             deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'Hexagonal':
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
-            for deform_matrix in deform_matrix_list:
-                deformed_cell = dot(cell, deform_matrix)
-                deformed_cell_list.append(deformed_cell)
-                
-        elif latt_system == 'Trigonal1' or latt_system == 'Trigonal2':
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
+            deform_matrix_list.extend(
+                (
+                    identity_matrix + strain_matrix(latt_system, up)[0],
+                    identity_matrix + strain_matrix(latt_system, up)[1],
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
-        elif latt_system == 'Tetragonal1' or latt_system == 'Tetragonal2':
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
+        elif latt_system in ['Trigonal1', 'Trigonal2']:
+            deform_matrix_list.extend(
+                (
+                    identity_matrix + strain_matrix(latt_system, up)[0],
+                    identity_matrix + strain_matrix(latt_system, up)[1],
+                )
+            )
+
+            for deform_matrix in deform_matrix_list:
+                deformed_cell = dot(cell, deform_matrix)
+                deformed_cell_list.append(deformed_cell)
+
+        elif latt_system in ['Tetragonal1', 'Tetragonal2']:
+            deform_matrix_list.extend(
+                (
+                    identity_matrix + strain_matrix(latt_system, up)[0],
+                    identity_matrix + strain_matrix(latt_system, up)[1],
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'Orthorombic':
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[2])
+            deform_matrix_list.extend(
+                (
+                    identity_matrix + strain_matrix(latt_system, up)[0],
+                    identity_matrix + strain_matrix(latt_system, up)[1],
+                    identity_matrix + strain_matrix(latt_system, up)[2],
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)   
 
         elif latt_system == 'Monoclinic':
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[2])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[3])
+            deform_matrix_list.extend(
+                (
+                    identity_matrix + strain_matrix(latt_system, up)[0],
+                    identity_matrix + strain_matrix(latt_system, up)[1],
+                    identity_matrix + strain_matrix(latt_system, up)[2],
+                    identity_matrix + strain_matrix(latt_system, up)[3],
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell) 
 
         elif latt_system == 'Triclinic':
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[2])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[3])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[4])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[5])
+            deform_matrix_list.extend(
+                (
+                    identity_matrix + strain_matrix(latt_system, up)[0],
+                    identity_matrix + strain_matrix(latt_system, up)[1],
+                    identity_matrix + strain_matrix(latt_system, up)[2],
+                    identity_matrix + strain_matrix(latt_system, up)[3],
+                    identity_matrix + strain_matrix(latt_system, up)[4],
+                    identity_matrix + strain_matrix(latt_system, up)[5],
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
     elif indict['dimensional'][0] == '2D':
-        if latt_system == 'isotropy' or latt_system == 'tetragonal':
+        if latt_system in ['isotropy', 'tetragonal']:
             deform_matrix = identity_matrix + strain_matrix(latt_system, up)[0]
             deformed_cell = dot(cell, deform_matrix)
             deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'orthotropy':
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
+            deform_matrix_list.extend(
+                (
+                    identity_matrix + strain_matrix(latt_system, up)[0],
+                    identity_matrix + strain_matrix(latt_system, up)[1],
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'anisotropy':
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
-            deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[2])
+            deform_matrix_list.extend(
+                (
+                    identity_matrix + strain_matrix(latt_system, up)[0],
+                    identity_matrix + strain_matrix(latt_system, up)[1],
+                    identity_matrix + strain_matrix(latt_system, up)[2],
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)

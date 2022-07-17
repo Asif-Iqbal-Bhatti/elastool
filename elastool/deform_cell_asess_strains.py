@@ -20,20 +20,25 @@ from strain_matrix import strain_matrix
 
 def deform_cell_asess_strains(latt_system, cell, up):
 	deformed_cell_list = []
-	deform_matrix_list = []
 	identity_matrix = identity(3)
-	deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[0])
-	deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[1])
-	deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[2])
+	deform_matrix_list = [
+		identity_matrix + strain_matrix(latt_system, up)[0],
+		identity_matrix + strain_matrix(latt_system, up)[1],
+		identity_matrix + strain_matrix(latt_system, up)[2],
+	]
 
 	if indict['dimensional'][0] == '3D':
-		deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[3])
-		deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[4])
-		deform_matrix_list.append(identity_matrix + strain_matrix(latt_system, up)[5])
-		
+		deform_matrix_list.extend(
+			(
+				identity_matrix + strain_matrix(latt_system, up)[3],
+				identity_matrix + strain_matrix(latt_system, up)[4],
+				identity_matrix + strain_matrix(latt_system, up)[5],
+			)
+		)
+
 	for deform_matrix in deform_matrix_list:
 		deformed_cell = dot(cell, deform_matrix)
 		deformed_cell_list.append(deformed_cell)
-	
+
 	return deformed_cell_list
     

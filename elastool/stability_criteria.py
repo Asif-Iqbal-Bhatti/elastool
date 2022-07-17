@@ -76,7 +76,7 @@ def criteria(elastic_constants_dict, latt_system):
         condition2 = c11 + 2*c12 > 0
         condition3 = c44 > 0
 
-    elif latt_system == 'Hexagonal' or latt_system == 'Tetragonal1':
+    elif latt_system in ['Hexagonal', 'Tetragonal1']:
         condition1 = c11 > abs(c12)
         condition2 = 2*c13*c13 < c33*(c11+c12)
         condition3 = c44 > 0
@@ -117,7 +117,7 @@ def criteria(elastic_constants_dict, latt_system):
         condition6 = c22*(c33*c55-c35*c35)+2*c23*c25*c35-c23*c23*c55-c25*c25*c33 > 0
         condition7 = 2*(c15*c25*(c33*c12-c13*c23)+c15*c35*(c22*c13-c12*c23)+c25*c35*(c11*c23-c12*c13)) - \
                      (c15*c15*(c22*c33-c23*c23)+c25*c25*(c11*c33-c13*c13)+c35*c35*(c11*c22-c12*c12)) + c55*g > 0
-            
+
     elif latt_system == 'Triclinic':
         condition1 = det(array([c11, c12, c13, c14, c15, c16],
                                   [c12, c22, c23, c24, c25, c26],
@@ -126,7 +126,6 @@ def criteria(elastic_constants_dict, latt_system):
                                   [c15, c25, c35, c45, c55, c56],
                                   [c16, c26, c36, c46, c56, c66])) > 0
 
-    # 2D Mater. 6 (2019) 048001
     elif latt_system == 'isotropy':
         condition1 = c11 > 0
         condition2 = c11 > abs(c12)

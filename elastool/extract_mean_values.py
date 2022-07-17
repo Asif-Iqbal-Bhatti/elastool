@@ -25,15 +25,12 @@ def get_stress(outcar_file, tag):
     for line in open(outcar_file, 'r'):
         if tag in line:
             l = line.split()
-            if tag == 'in kB':
-                stresses = [float(l[2]),float(l[3]),float(l[4]),float(l[6]),float(l[7]),float(l[5])]
-            elif tag == 'Total+kin.':
+            if tag == 'Total+kin.':
                 stresses = [float(l[1]),float(l[2]),float(l[3]),float(l[5]),float(l[6]),float(l[4])]
+            elif tag == 'in kB':
+                stresses = [float(l[2]),float(l[3]),float(l[4]),float(l[6]),float(l[7]),float(l[5])]
             df_new = DataFrame([stresses], columns=dirs)
-            if num_record == 0:
-                df = df_new
-            else:
-                df = df.append(df_new, ignore_index=True)
+            df = df_new if num_record == 0 else df.append(df_new, ignore_index=True)
             num_record += 1
     return df
 
@@ -41,14 +38,10 @@ def get_stress(outcar_file, tag):
 def mean_stress(outcar_file, num_last_samples, tag):
     df = get_stress(outcar_file, tag)
     stress_data = df.tail(num_last_samples)
-    stress_list = []
     # in order: XX, YY, ZZ, XY, YZ, ZX
     #for direction in stress_data.columns:
     dirs = ['XX', 'YY', 'ZZ', 'YZ', 'ZX', 'XY']
-    for direction in dirs:
-        stress_list.append(stress_data[direction].mean())
-        #print("%s: %.4f" % (direction, stress_data[direction].mean()))
-    return stress_list
+    return [stress_data[direction].mean() for direction in dirs]
 
 
 def get_pressure(outcar_file):
@@ -60,10 +53,7 @@ def get_pressure(outcar_file):
             l = line.split()
             pressure = [float(l[3]) + float(l[8])]
             df_new = DataFrame([pressure], columns=dirs)
-            if num_record == 0:
-                df = df_new
-            else:
-                df = df.append(df_new, ignore_index=True)
+            df = df_new if num_record == 0 else df.append(df_new, ignore_index=True)
             num_record += 1
     return df
 
@@ -71,13 +61,10 @@ def get_pressure(outcar_file):
 def mean_pressure(outcar_file, num_last_samples):
     df = get_pressure(outcar_file)
     pressure_data = df.tail(num_last_samples)
-    pressure_list = []
     # in order: XX, YY, ZZ, XY, YZ, ZX
     #for direction in stress_data.columns:
     dirs = ['pressure']
-    for direction in dirs:
-        pressure_list.append(pressure_data[direction].mean())
-        #print("%s: %.4f" % (direction, stress_data[direction].mean()))
+    pressure_list = [pressure_data[direction].mean() for direction in dirs]
     return pressure_list[0]
 
 
@@ -91,10 +78,7 @@ def get_temperature(outcar_file):
             l = line.split()
             temperature = [float(l[4])]
             df_new = DataFrame([temperature], columns=dirs)
-            if num_record == 0:
-                df = df_new
-            else:
-                df = df.append(df_new, ignore_index=True)
+            df = df_new if num_record == 0 else df.append(df_new, ignore_index=True)
             num_record += 1
     return df
 
@@ -102,13 +86,10 @@ def get_temperature(outcar_file):
 def mean_temperature(outcar_file, num_last_samples):
     df = get_temperature(outcar_file)
     temperature_data = df.tail(num_last_samples)
-    temperature_list = []
     # in order: XX, YY, ZZ, XY, YZ, ZX
     #for direction in stress_data.columns:
     dirs = ['temperature']
-    for direction in dirs:
-        temperature_list.append(temperature_data[direction].mean())
-        #print("%s: %.4f" % (direction, stress_data[direction].mean()))
+    temperature_list = [temperature_data[direction].mean() for direction in dirs]
     return temperature_list[0]
 
 
@@ -121,10 +102,7 @@ def get_volume(vasprun_file):
             l = line.split()
             volume = [float(l[2])]
             df_new = DataFrame([volume], columns=dirs)
-            if num_record == 0:
-                df = df_new
-            else:
-                df = df.append(df_new, ignore_index=True)
+            df = df_new if num_record == 0 else df.append(df_new, ignore_index=True)
             num_record += 1
     return df
 
@@ -132,10 +110,8 @@ def get_volume(vasprun_file):
 def mean_volume(vasprun_file, num_last_samples):
     df = get_volume(vasprun_file)
     volume_data = df.tail(num_last_samples)
-    volume_list = []
     dirs = ['volume']
-    for direction in dirs:
-        volume_list.append(volume_data[direction].mean())
+    volume_list = [volume_data[direction].mean() for direction in dirs]
     return volume_list[0]
 
     

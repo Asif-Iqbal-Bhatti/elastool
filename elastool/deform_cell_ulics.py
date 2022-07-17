@@ -29,75 +29,78 @@ def deform_cell_ulics(latt_system, cell, up):
         deform_matrix_4 = identity_matrix + strain_matrix(latt_system, up)[3]
         deform_matrix_5 = identity_matrix + strain_matrix(latt_system, up)[4]
         deform_matrix_6 = identity_matrix + strain_matrix(latt_system, up)[5]
-                                                                                                                    
+
         if latt_system == 'Cubic':
             deformed_cell = dot(cell, deform_matrix_1)
             deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'Hexagonal':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
+            deform_matrix_list.extend((deform_matrix_1, deform_matrix_2))
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
-                
+
         elif latt_system == 'Trigonal1':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
+            deform_matrix_list.extend((deform_matrix_1, deform_matrix_2))
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'Trigonal2':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
+            deform_matrix_list.extend((deform_matrix_1, deform_matrix_2))
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'Tetragonal1':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
+            deform_matrix_list.extend((deform_matrix_1, deform_matrix_2))
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'Tetragonal2':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
+            deform_matrix_list.extend((deform_matrix_1, deform_matrix_2))
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'Orthorombic':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
-            deform_matrix_list.append(deform_matrix_3)
+            deform_matrix_list.extend((deform_matrix_1, deform_matrix_2, deform_matrix_3))
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)   
 
         elif latt_system == 'Monoclinic':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
-            deform_matrix_list.append(deform_matrix_3)
-            deform_matrix_list.append(deform_matrix_4)
-            deform_matrix_list.append(deform_matrix_5)
+            deform_matrix_list.extend(
+                (
+                    deform_matrix_1,
+                    deform_matrix_2,
+                    deform_matrix_3,
+                    deform_matrix_4,
+                    deform_matrix_5,
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell) 
 
         elif latt_system == 'Triclinic':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
-            deform_matrix_list.append(deform_matrix_3)
-            deform_matrix_list.append(deform_matrix_4)
-            deform_matrix_list.append(deform_matrix_5)
-            deform_matrix_list.append(deform_matrix_6)
+            deform_matrix_list.extend(
+                (
+                    deform_matrix_1,
+                    deform_matrix_2,
+                    deform_matrix_3,
+                    deform_matrix_4,
+                    deform_matrix_5,
+                    deform_matrix_6,
+                )
+            )
+
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
-                
+
         else:
             print('Crystal system is not parsed correctly!!!')
             exit(1)
@@ -107,26 +110,23 @@ def deform_cell_ulics(latt_system, cell, up):
         deform_matrix_2 = identity_matrix + strain_matrix(latt_system, up)[1]
         deform_matrix_3 = identity_matrix + strain_matrix(latt_system, up)[2]
 
-        if latt_system == 'isotropy' or latt_system == 'tetragonal':
+        if latt_system in ['isotropy', 'tetragonal']:
             deformed_cell = dot(cell, deform_matrix_1)
             deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'orthotropy':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
+            deform_matrix_list.extend((deform_matrix_1, deform_matrix_2))
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
 
         elif latt_system == 'anisotropy':
-            deform_matrix_list.append(deform_matrix_1)
-            deform_matrix_list.append(deform_matrix_2)
-            deform_matrix_list.append(deform_matrix_3)
+            deform_matrix_list.extend((deform_matrix_1, deform_matrix_2, deform_matrix_3))
             for deform_matrix in deform_matrix_list:
                 deformed_cell = dot(cell, deform_matrix)
                 deformed_cell_list.append(deformed_cell)
         else:
             print('Crystal system is not parsed correctly!!!')
             exit(1)
-            
+
     return deformed_cell_list

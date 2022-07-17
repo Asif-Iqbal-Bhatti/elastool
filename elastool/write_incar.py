@@ -16,7 +16,7 @@
 
 
 def write_incar(step, cwd):
-    infile = cwd+'/INCARs'
+    infile = f'{cwd}/INCARs'
     outfile = 'INCAR'
     tag = 'Step:'
     is_write = False

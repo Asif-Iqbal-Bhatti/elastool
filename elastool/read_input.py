@@ -18,24 +18,23 @@ from os import getcwd
 
 def read_input():
     cwd = getcwd()
-    main_infile = open('%s/elastool.in'%cwd, 'r')
+    main_infile = open(f'{cwd}/elastool.in', 'r')
     line = main_infile.readline()
     global indict
     indict = {}
     while line:
         line = main_infile.readline()
         llist = line.split('=')
-        
-        if llist != ['\n'] and llist != ['']:
-            if llist[0][0] != '#':
-                inputlist = [i.strip().split() for i in llist]
-                if inputlist[1] == []:
-                    with open('../log.elastool', 'a') as logfile:
-                        print >>logfile, "Please give the value(s) for: %s" % inputlist[0][0]
-                        
-                else:
-                    indict[inputlist[0][0]] = inputlist[1]
-                    
+
+        if llist not in [['\n'], ['']] and llist[0][0] != '#':
+            inputlist = [i.strip().split() for i in llist]
+            if inputlist[1] == []:
+                with open('../log.elastool', 'a') as logfile:
+                    print >>logfile, "Please give the value(s) for: %s" % inputlist[0][0]
+
+            else:
+                indict[inputlist[0][0]] = inputlist[1]
+
     return indict
 
 

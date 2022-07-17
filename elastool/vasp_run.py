@@ -25,7 +25,7 @@ from extract_mean_values import get_pressure, mean_pressure
 
 def vasp_run(step, kpoints_file_name, cwd):
     write_incar(step, cwd)
-    system("cp %s/%s KPOINTS" % (cwd, kpoints_file_name))
+    system(f"cp {cwd}/{kpoints_file_name} KPOINTS")
 
     pos = vasp.read_vasp('POSCAR')
     chem_symb = pos.get_chemical_symbols()
@@ -38,7 +38,7 @@ def vasp_run(step, kpoints_file_name, cwd):
         system("rm POTCAR")
 
     for ele in ele_list:
-        system("cat %s/POTCAR-%s >> POTCAR" % (cwd, ele))
+        system(f"cat {cwd}/POTCAR-{ele} >> POTCAR")
 
     # method_stress_statistics = indict['method_stress_statistics'][0]
 

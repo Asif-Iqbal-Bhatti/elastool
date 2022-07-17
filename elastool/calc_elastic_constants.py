@@ -82,8 +82,8 @@ def Cubic(latt_system, elastic_constants_dict, stress_set_dict, convertion_facto
 
 def Hexagonal(latt_system, elastic_constants_dict, stress_set_dict, convertion_factor):
     for n, up in enumerate(stress_set_dict.keys()):
+        s1 = strain_matrix(latt_system, up)[0]
         if up == 0:
-            s1 = strain_matrix(latt_system, up)[0]
             stress_list1 = array(stress_set_dict[up][0])
 
             eplisons_now = array([[s1[0][0],  s1[1][1],  s1[2][2],  0., 0.],
@@ -100,7 +100,6 @@ def Hexagonal(latt_system, elastic_constants_dict, stress_set_dict, convertion_f
                                      [stress_list1[4]],
                                      [stress_list1[5]]])
         else:
-            s1 = strain_matrix(latt_system, up)[0]
             s2 = strain_matrix(latt_system, up)[1]
             stress_list1 = array(stress_set_dict[up][0])
             stress_list2 = array(stress_set_dict[up][1])
@@ -179,8 +178,8 @@ def Hexagonal(latt_system, elastic_constants_dict, stress_set_dict, convertion_f
 
 def Trigonal1(latt_system, elastic_constants_dict, stress_set_dict, convertion_factor):
     for n, up in enumerate(stress_set_dict.keys()):
+        s1 = strain_matrix(latt_system, up)[0]
         if up == 0:
-            s1 = strain_matrix(latt_system, up)[0]
             stress_list1 = array(stress_set_dict[up][0])
 
             eplisons_now = array([[s1[0][0],  s1[1][1],  s1[2][2], 2*s1[1][2],  0., 0.],
@@ -197,7 +196,6 @@ def Trigonal1(latt_system, elastic_constants_dict, stress_set_dict, convertion_f
                                      [stress_list1[4]],
                                      [stress_list1[5]]])
         else:
-            s1 = strain_matrix(latt_system, up)[0]
             s2 = strain_matrix(latt_system, up)[1]
             stress_list1 = array(stress_set_dict[up][0])
             stress_list2 = array(stress_set_dict[up][1])
@@ -254,8 +252,8 @@ def Trigonal1(latt_system, elastic_constants_dict, stress_set_dict, convertion_f
 
 def Trigonal2(latt_system, elastic_constants_dict, stress_set_dict, convertion_factor):
     for n, up in enumerate(stress_set_dict.keys()):
+        s1 = strain_matrix(latt_system, up)[0]
         if up == 0:
-            s1 = strain_matrix(latt_system, up)[0]
             stress_list1 = array(stress_set_dict[up][0])
 
             eplisons_now = array([[s1[0][0],  s1[1][1],  s1[2][2],  2*s1[1][2],  2*s1[0][2],  0., 0.],
@@ -272,7 +270,6 @@ def Trigonal2(latt_system, elastic_constants_dict, stress_set_dict, convertion_f
                                      [stress_list1[4]],
                                      [stress_list1[5]]])
         else:
-            s1 = strain_matrix(latt_system, up)[0]
             s2 = strain_matrix(latt_system, up)[1]
             stress_list1 = array(stress_set_dict[up][0])
             stress_list2 = array(stress_set_dict[up][1])
@@ -331,8 +328,8 @@ def Trigonal2(latt_system, elastic_constants_dict, stress_set_dict, convertion_f
 
 def Tetragonal1(latt_system, elastic_constants_dict, stress_set_dict, convertion_factor):
     for n, up in enumerate(stress_set_dict.keys()):
+        s1 = strain_matrix(latt_system, up)[0]
         if up == 0:
-            s1 = strain_matrix(latt_system, up)[0]
             stress_list1 = array(stress_set_dict[up][0])
 
             eplisons_now = array([[s1[0][0],  s1[1][1],  s1[2][2],   0.,   0.,   0.],
@@ -349,7 +346,6 @@ def Tetragonal1(latt_system, elastic_constants_dict, stress_set_dict, convertion
                                      [stress_list1[4]],
                                      [stress_list1[5]]])
         else:
-            s1 = strain_matrix(latt_system, up)[0]
             s2 = strain_matrix(latt_system, up)[1]
             stress_list1 = array(stress_set_dict[up][0])
             stress_list2 = array(stress_set_dict[up][1])
@@ -430,8 +426,8 @@ def Tetragonal1(latt_system, elastic_constants_dict, stress_set_dict, convertion
 
 def Tetragonal2(latt_system, elastic_constants_dict, stress_set_dict, convertion_factor):
     for n, up in enumerate(stress_set_dict.keys()):
+        s1 = strain_matrix(latt_system, up)[0]
         if up == 0:
-            s1 = strain_matrix(latt_system, up)[0]
             stress_list1 = array(stress_set_dict[up][0])
 
             eplisons_now = array([[s1[0][0],  s1[1][1],  s1[2][2], 2*s1[0][1],  0.,   0.,   0.],
@@ -448,7 +444,6 @@ def Tetragonal2(latt_system, elastic_constants_dict, stress_set_dict, convertion
                                      [stress_list1[4]],
                                      [stress_list1[5]]])
         else:
-            s1 = strain_matrix(latt_system, up)[0]
             s2 = strain_matrix(latt_system, up)[1]
             stress_list1 = array(stress_set_dict[up][0])
             stress_list2 = array(stress_set_dict[up][1])
@@ -525,7 +520,7 @@ def Tetragonal2(latt_system, elastic_constants_dict, stress_set_dict, convertion
     elastic_constants_dict['G_vrh'] = G_vrh
     elastic_constants_dict['E'] = E
     elastic_constants_dict['v'] = v
-    
+
     return elastic_constants_dict
 
 

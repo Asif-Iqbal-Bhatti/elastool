@@ -18,22 +18,15 @@ from read_input import indict
 
 
 def findspg(atoms):
-    spg0 = spglib.get_spacegroup(atoms, symprec=0.1)
-    if spg0:
+    if spg0 := spglib.get_spacegroup(atoms, symprec=0.1):
         spg1 = spg0.split()
-        spg = [str(spg1[0]), int(spg1[1][1:-1])]
+        return [str(spg1[0]), int(spg1[1][1:-1])]
     else:
-        spg = []
-    # print spg0, spg
-
-    return spg
+        return []
 
 
 def find_crystal_system(pos_conv, dimensional):
     if dimensional == '2D':
-        dist_acc = 0.1
-        angl_acc = 0.5
-        
         lenth_angl = pos_conv.get_cell_lengths_and_angles()
         a = lenth_angl[0]
         b = lenth_angl[1]
@@ -42,16 +35,16 @@ def find_crystal_system(pos_conv, dimensional):
 
         # The 2D lattice system is defined according to 2D Mater. 6 (2019) 048001
         if c > a and c > b:
+            dist_acc = 0.1
+            angl_acc = 0.5
+
             if abs(a - b) <= dist_acc:
                 if abs(gamma - 120) <= angl_acc or abs(gamma - 60) <= angl_acc: #The last part is for some 2D systems
                     latt_system = 'isotropy' #This is 2D Hexagonal system
                 elif abs(gamma - 90) <= angl_acc:
                     latt_system = 'tetragonal'
             else:
-                if abs(gamma - 90) <= angl_acc:
-                    latt_system = 'orthotropy'
-                else:
-                    latt_system = 'anisotropy'
+                latt_system = 'orthotropy' if abs(gamma - 90) <= angl_acc else 'anisotropy'
         else:
             print('ERROR: the vacuum is not along the c axis!!!\n')
             print('Plz adjust the vacuum to be along the c axis!!!\n')
@@ -71,7 +64,7 @@ def find_crystal_system(pos_conv, dimensional):
                 [194, "Hexagonal"],
                 [230, "Cubic"]
             ]
-        
+
         for l in crystal_system:
             if spg_num <= l[0]:
                 latt_system = l[1]

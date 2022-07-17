@@ -18,9 +18,7 @@ from math import pi,sqrt
 from numpy import cross,linalg
 
 def sound_velocity(elastic_constants_dict, cwd, dimensional):
-    pos = vasp.read_vasp('%s/OPT/CONTCAR'%cwd)
-    # The Planck's constant in m^2 Kg s^-1
-    h = 6.626E-34
+    pos = vasp.read_vasp(f'{cwd}/OPT/CONTCAR')
     # The reduced Planck's constant hbar in m^2 Kg s^-1
     hbar = 1.0546E-34
     # The Boltzmann constant in m^2 Kg s^-2 K-1
@@ -34,6 +32,8 @@ def sound_velocity(elastic_constants_dict, cwd, dimensional):
     # The number of atoms in the supercell (molecule)
     n = pos.get_global_number_of_atoms()
     if dimensional == '3D':
+        # The Planck's constant in m^2 Kg s^-1
+        h = 6.626E-34
         try:
             # The density in Kg/m^3
             rho = M*1E-3/Na/volume/1E-30
@@ -76,7 +76,6 @@ def sound_velocity(elastic_constants_dict, cwd, dimensional):
         G_a = Y_2Da/2.0/(1+v_a)  #Note you can use (C_ii-C_ij)/2
         B_b = Y_2Db/2.0/(1-v_b)
         G_b = Y_2Db/2.0/(1+v_b)  #Note you can use (C_ii-C_ij)/2        cell = pos.get_cell()
-
 #        print(B_a,G_a,B_b,G_b)
 
         cell = pos.get_cell()
